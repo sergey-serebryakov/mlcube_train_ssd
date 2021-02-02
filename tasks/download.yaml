@@ -1,0 +1,13 @@
+# Schema
+schema_version: 1.0.0
+schema_type: mlcube_task
+
+# Task Inputs
+inputs:
+        - name: cache_dir
+          type: directory
+
+# Task Outputs
+outputs:
+        - name: data_dir
+          type: directory

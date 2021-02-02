@@ -1,0 +1,10 @@
+schema_version: 1.0.0
+schema_type: mlcube_task
+
+inputs:
+        - name: data_dir
+          type: directory
+
+outputs:
+        - name: parameters_file
+          type: file
