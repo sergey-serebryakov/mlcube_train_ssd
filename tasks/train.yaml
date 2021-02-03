@@ -2,9 +2,12 @@ schema_version: 1.0.0
 schema_type: mlcube_task
 
 inputs:
-        - name: data_dir
-          type: directory
+  - name: data_dir
+    type: directory
+    description: "See download::data_dir."
 
-outputs:
-        - name: parameters_file
-          type: file
+  - name: parameters_file
+    type: file
+    description: "File with input parameters, such as number of epochs."
+
+outputs: []

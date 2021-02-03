@@ -23,6 +23,7 @@ RUN pip install --no-cache-dir cython \
 # Copy SSD code
 COPY ssd .
 COPY main.py .
+RUN chmod +x ./run_and_time.sh
 
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8

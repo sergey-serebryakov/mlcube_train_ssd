@@ -1,13 +1,18 @@
-# Schema
 schema_version: 1.0.0
 schema_type: mlcube_task
 
-# Task Inputs
-inputs:
-        - name: cache_dir
-          type: directory
+inputs: []
 
-# Task Outputs
 outputs:
-        - name: data_dir
-          type: directory
+  - name: cache_dir
+    type: directory
+    description: >-
+      Cache directory for compressed datasets and annotations (COCO 2017). Will contain the following files:
+      `train2017.zip`, `val2017.zip` and `annotations_trainval2017.zip`. Total size is ~ 20G. If these files are not
+      present, they will be downloaded here.
+
+  - name: data_dir
+    type: directory
+    description: >-
+      Directory for uncompressed datasets. Will contain the following subdirectories: `train2017`, `val2017` and
+      `annotations`. Total size is ~ 20G. This is basically the content of archives in **cache_dir**.

@@ -3,8 +3,8 @@ schema_version: 1.0.0
 
 task_name: download
 
-input_binding:
-        cache_dir: $WORKSPACE/cache
+input_binding: {}
 
 output_binding:
-        data_dir: $WORKSPACE/data
+  cache_dir: $WORKSPACE/cache
+  data_dir: $WORKSPACE/data

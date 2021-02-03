@@ -1,6 +1,7 @@
 import os
 import yaml
 import typer
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -26,21 +27,23 @@ class DownloadTask(object):
             print(f"Data ({name}) has already been downloaded: {dest_dir}")
             return
 
-        cached_file = cache_dir / f"{name}.zip"
-        if not cached_file.exists():
-            print(f"Data ({name}) is not in cache ({cached_file}), downloading ...")
+        archive_name = Path(DownloadTask.urls[name]).name
+        cached_archive = cache_dir / archive_name
+        if not cached_archive.exists():
+            print(f"Data ({name}) is not in cache ({cached_archive}), downloading ...")
             os.system(f"cd {cache_dir}; curl -O {DownloadTask.urls[name]};")
 
+        dest_archive = data_dir / archive_name
         if cache_dir != data_dir:
-            print(f"Copying data from {cache_dir}/{name}.zip to {data_dir}")
-            os.system(f"cp {cache_dir}/{name}.zip {data_dir};")
+            print(f"Copying data from {cached_archive} to {dest_archive} ...")
+            shutil.copyfile(cached_archive, dest_archive)
 
-        print(f"Extracting archive: {name}.zip")
-        os.system(f"cd {data_dir}; unzip {name}.zip;")
+        print(f"Extracting archive ({archive_name}) ...")
+        os.system(f"cd {data_dir}; unzip {archive_name};")
 
-        if cache_dir != data_dir and (data_dir / f'{name}.zip').exists():
-            print(f"Removing data archive ({name}.zip) in the data directory ({data_dir}).")
-            os.system(f"cd {data_dir};  rm ./{name}.zip;")
+        if cache_dir != data_dir and dest_archive.exists():
+            print(f"Removing data archive ({dest_archive}) ...")
+            os.remove(dest_archive)
 
     @staticmethod
     def run(cache_dir: str, data_dir: str) -> None:
