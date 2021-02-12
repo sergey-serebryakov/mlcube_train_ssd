@@ -1,0 +1,25 @@
+name: MLCommons SSD Training Reference Benchmark
+author: MLCommons Best Practices Working Group
+
+tasks:
+  # Download COCO 2017 dataset
+  download:
+    parameters:
+      # Cache directory for compressed datasets and annotations (COCO 2017). Will contain the following files:
+      # `train2017.zip`, `val2017.zip` and `annotations_trainval2017.zip`. Total size is ~ 20G. If these files are not
+      # present, they will be downloaded here.
+      - {name: cache_dir, type: directory, io: output}
+      # Directory for uncompressed datasets. Will contain the following subdirectories: `train2017`, `val2017` and
+      #      `annotations`. Total size is ~ 20G. This is basically the content of archives in **cache_dir**.
+      - {name: data_dir,  type: directory, io: output}
+    tasks:
+      download: {cache_dir: $WORKSPACE/cache, data_dir: $WORKSPACE/data}
+  # Train SSD model
+  train:
+    parameters:
+      # see Download::data_dir
+      - {name: data_dir,         type: directory, io: input}
+      # Yaml file with training parameters.
+      - {name: parameters_file,  type: file,      io: input}
+    tasks:
+      train: {data_dir: $WORKSPACE/data, parameters_file: $WORKSPACE/parameters.yaml}
